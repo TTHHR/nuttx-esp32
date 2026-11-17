@@ -21,6 +21,22 @@ install -d "$board_dir/configs/clawdmochi"
 install -m 0644 "$root_dir/config/clawdmochi/defconfig" \
   "$board_dir/configs/clawdmochi/defconfig"
 
+# The application overlay lives in nuttx-apps so that "configure.sh -a" can
+# see it.  Copying it here is idempotent; if the copy and the tracked overlay
+# differ, the nuttx-apps submodule reports a modified file instead of silently
+# building a stale application.
+
+apps_overlay="$root_dir/apps/clawdmochi_posix"
+
+if [ -d "$apps_overlay" ]; then
+  install -d "$apps_dir/examples/clawdmochi_posix"
+
+  for src in "$apps_overlay"/*; do
+    [ -f "$src" ] || continue
+    install -m 0644 "$src" "$apps_dir/examples/clawdmochi_posix/$(basename "$src")"
+  done
+fi
+
 lock_headers=(
   "$nuttx_dir/arch/risc-v/src/common/espressif/platform_include/sys/lock.h"
   "$nuttx_dir/arch/risc-v/src/chip/esp-hal-3rdparty/components/esp_libc/platform_include/sys/lock.h"

@@ -25,11 +25,17 @@ validated incrementally on hardware.
   and flashing the board are done by the developer: do not run
   `scripts/build.sh`, `make`, `esptool.py`, or `scripts/flash.sh`
   automatically.
+- The board port is committed on branch `clawdmochi` in both submodule forks.
+  Change the port there, push the branch, then record the new revision here
+  with `git add nuttx nuttx-apps`. Do not commit in a detached submodule
+  checkout: the recorded revision would only exist on the local machine.
 
 ## Layout
 
-- `nuttx`: Apache NuttX submodule, pinned to the tested revision.
-- `nuttx-apps`: Apache NuttX applications submodule.
+- `nuttx`: NuttX fork (`TTHHR/nuttx`, branch `clawdmochi`), based on the
+  tested upstream revision plus the ESP32-C3 port.
+- `nuttx-apps`: applications fork (`TTHHR/nuttx-apps`, branch `clawdmochi`),
+  carrying `examples/clawdmochi_posix`.
 - `apps/clawdmochi_posix`: POSIX validation application.
 - `config`: board configuration, startup script, network defaults, and the
   application overlay copied into the source trees by `scripts/setup.sh`.
