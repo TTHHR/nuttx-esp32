@@ -41,6 +41,8 @@ validated incrementally on hardware.
   application overlay copied into the source trees by `scripts/setup.sh`.
 - `partitions.csv`: 4 MB ESP32-C3 flash layout.
 - `scripts`: reproducible setup, build, size check, and flash helpers.
+- `docs`: design plan and Wi-Fi bring-up notes
+  ([wifi-bringup-notes.md](docs/wifi-bringup-notes.md)).
 
 ## First build
 
