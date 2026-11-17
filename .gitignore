@@ -1,0 +1,15 @@
+.venv/
+artifacts/
+nuttx/.config
+nuttx/.config.old
+nuttx/Make.defs
+nuttx/bootloader-esp32c3.bin
+nuttx/partition-table-esp32c3.bin
+nuttx/nuttx
+nuttx/nuttx.bin
+nuttx/nuttx.hex
+nuttx/nuttx.map
+nuttx/nuttx.manifest
+nuttx/.version
+__pycache__/
+*.pyc

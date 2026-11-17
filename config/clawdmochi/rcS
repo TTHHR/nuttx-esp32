@@ -1,0 +1,8 @@
+mkdir -p /data/bin
+mkdir -p /data/scripts
+
+ifconfig
+
+if test -e /data/boot.nsh; then
+  source /data/boot.nsh
+fi

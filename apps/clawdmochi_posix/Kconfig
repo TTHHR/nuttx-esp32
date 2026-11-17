@@ -1,0 +1,32 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config EXAMPLES_CLAWDMOCHI_POSIX
+	tristate "ClawdMochi POSIX validation"
+	default n
+	---help---
+		Run POSIX thread, mutex, condition variable, semaphore, clock,
+		and scheduling checks.
+
+if EXAMPLES_CLAWDMOCHI_POSIX
+
+config EXAMPLES_CLAWDMOCHI_POSIX_PROGNAME
+	string "Program name"
+	default "clawdmochi_posix"
+
+config EXAMPLES_CLAWDMOCHI_POSIX_PRIORITY
+	int "Task priority"
+	default 100
+
+config EXAMPLES_CLAWDMOCHI_POSIX_STACKSIZE
+	int "Task stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+config EXAMPLES_CLAWDMOCHI_POSIX_ITERATIONS
+	int "Iterations per worker"
+	default 25
+	range 1 1000
+
+endif

@@ -1,0 +1,3 @@
+ifneq ($(CONFIG_EXAMPLES_CLAWDMOCHI_POSIX),)
+CONFIGURED_APPS += $(APPDIR)/examples/clawdmochi_posix
+endif
