@@ -1,24 +1,33 @@
 
 set +e
 
-for dir in /data /data/bin /data/scripts; do
-    if [ -d "$dir" ]; then
-        echo "[OK] $dir"
-    else
-        mkdir -p "$dir"
-        if [ -d "$dir" ]; then
-            echo "[OK]   $dir"
-        else
-            echo "[ERROR] $dir"
-        fi
-    fi
-done
+mkdir -p /data
+mkdir -p /data/bin
+mkdir -p /data/scripts
+
+if [ -d /data ]; then
+    echo "[OK]    /data"
+else
+    echo "[ERROR] /data"
+fi
+
+if [ -d /data/bin ]; then
+    echo "[OK]    /data/bin"
+else
+    echo "[ERROR] /data/bin"
+fi
+
+if [ -d /data/scripts ]; then
+    echo "[OK]    /data/scripts"
+else
+    echo "[ERROR] /data/scripts"
+fi
 
 ifconfig
 
 if [ -e /data/net.nsh ]; then
     echo "[OK]    /data/net.nsh"
-    source /data/net.nsh &
+    source /data/net.nsh
 else
     echo ifup wlan0 >> /data/net.nsh
     echo  wapi txpower wlan0 8 WAPI_TXPOWER_DBM >> /data/net.nsh

@@ -136,6 +136,17 @@ upload:
 nsh> clawdmochi_posix
 ```
 
+For FTP upload validation, `scripts/build.sh` also produces a loadable
+`clawdmochi_posix` ELF module at `nuttx-apps/bin/clawdmochi_posix`. Upload it
+in binary mode into `/data/bin`, then execute it manually:
+
+```console
+ftp> bin
+ftp> put nuttx-apps/bin/clawdmochi_posix app
+
+nsh> /data/bin/app
+```
+
 ## Recovery
 
 The ESP ROM serial download path remains available. If the NuttX image is
