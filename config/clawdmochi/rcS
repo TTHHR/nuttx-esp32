@@ -1,8 +1,31 @@
-mkdir -p /data/bin
-mkdir -p /data/scripts
+
+set +e
+
+for dir in /data /data/bin /data/scripts; do
+    if [ -d "$dir" ]; then
+        echo "[OK] $dir"
+    else
+        mkdir -p "$dir"
+        if [ -d "$dir" ]; then
+            echo "[OK]   $dir"
+        else
+            echo "[ERROR] $dir"
+        fi
+    fi
+done
 
 ifconfig
 
-if test -e /data/boot.nsh; then
-  source /data/boot.nsh
+if [ -e /data/net.nsh ]; then
+    echo "[OK]    /data/net.nsh"
+    source /data/net.nsh &
+else
+    echo ifup wlan0 >> /data/net.nsh
+    echo  wapi txpower wlan0 8 WAPI_TXPOWER_DBM >> /data/net.nsh
+    echo wapi psk wlan0 invo@123456 3   >> /data/net.nsh
+    echo wapi essid wlan0 invo-lan 1  >> /data/net.nsh
+    echo renew wlan0 >> /data/net.nsh
+
 fi
+
+set -e

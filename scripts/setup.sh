@@ -21,6 +21,15 @@ install -d "$board_dir/configs/clawdmochi"
 install -m 0644 "$root_dir/config/clawdmochi/defconfig" \
   "$board_dir/configs/clawdmochi/defconfig"
 
+# The /etc ROMFS image is built from the board "src" tree; see RCSRCS in
+# boards/risc-v/esp32c3/common/src/Make.defs.  The scripts are preprocessed by
+# the C preprocessor, so they must not contain '#' comment lines.
+install -d "$board_dir/src/etc/init.d"
+install -m 0644 "$root_dir/config/clawdmochi/rc.sysinit" \
+  "$board_dir/src/etc/init.d/rc.sysinit"
+install -m 0644 "$root_dir/config/clawdmochi/rcS" \
+  "$board_dir/src/etc/init.d/rcS"
+
 # The application overlay lives in nuttx-apps so that "configure.sh -a" can
 # see it.  Copying it here is idempotent; if the copy and the tracked overlay
 # differ, the nuttx-apps submodule reports a modified file instead of silently

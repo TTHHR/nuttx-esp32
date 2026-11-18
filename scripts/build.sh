@@ -46,9 +46,29 @@ fi
 if [ "${RECONFIGURE:-0}" = "1" ] || [ ! -f .config ] ||
    [ "$configured_hash" != "$defconfig_hash" ]; then
   echo "Reconfiguring NuttX from $defconfig"
+
+  # "make distclean" removes the cloned Espressif HAL repository (~250 MB,
+  # including the WiFi/PHY/Coex/BT binary submodules).  Re-cloning it on
+  # every defconfig change is painful on slow networks, so park it outside
+  # the build tree and put it back once the build tree has been recreated.
+  # Delete .cache/esp-hal-3rdparty manually after changing
+  # ESP_HAL_3RDPARTY_VERSION in nuttx.
+  hal_dir="$nuttx_dir/arch/risc-v/src/esp32c3/esp-hal-3rdparty"
+  hal_cache="$root_dir/.cache/esp-hal-3rdparty"
+
+  if [ -d "$hal_dir" ] && [ ! -e "$hal_cache" ]; then
+    install -d "$(dirname "$hal_cache")"
+    mv "$hal_dir" "$hal_cache"
+  fi
+
   if [ -f Make.defs ] || [ -f .config ]; then
     make distclean
   fi
+
+  if [ ! -e "$hal_dir" ] && [ -d "$hal_cache" ]; then
+    mv "$hal_cache" "$hal_dir"
+  fi
+
   ./tools/configure.sh -a ../nuttx-apps esp32c3-supermini:clawdmochi
   printf '%s\n' "$defconfig_hash" > "$config_stamp"
 fi

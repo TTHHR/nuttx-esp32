@@ -1,4 +1,5 @@
 .venv/
+.cache/
 artifacts/
 nuttx/.config
 nuttx/.config.old
